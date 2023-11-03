@@ -1,0 +1,17 @@
+python -m pydoc -w MySearch 
+python -m doctest MySearch.py > test_results.txt
+
+cloc --json Riki > Progress/YYYY_MM_DD.json
+
+localhost:5000
+
+activate
+deactivate
+
+python -m pip install -r ~~LOCATION_TO_FILE~~/requirements.txt
+
+name
+1234
+
+sam
+1234
