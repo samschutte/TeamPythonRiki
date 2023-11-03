@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}
+{% if search %}
+	Results for <i>{{ search|join(', ') }}</i>
+{% else %}
+	Search By Tags
+{% endif %}
+{% endblock title %}
+
+{% block content %}
+<div class="row">
+    <div class="span8 offset2">
+        <h2>Search by Tags</h2>
+        <form class="form-inline well" method="POST">
+            {{ form.hidden_tag() }}
+            {% for field in form if field.name != 'csrf_token' %}
+                <div class="form-check">
+                    {{ field(class="form-check-input") }}
+                    <label class="form-check-label" for="{{ field.id }}">{{ field.label.text }}</label>
+                </div>
+            {% endfor %}
+            <button type="submit" class="btn btn-success">Search</button>
+        </form>
+    </div>
+</div>
+
+{% if search %}
+    <!-- <p> search = {{search}}</p> -->
+	{% if results %}
+		<ul>
+			{% for result in results %}
+				<li><a href="{{ url_for('wiki.display', url=result.url) }}">{{ result.title }}</a></li>
+			{% endfor %}
+		</ul>
+	{% else %}
+		<p>No results for your search.</p>
+	{% endif %}
+{% endif %}
+
+{% endblock content %}
