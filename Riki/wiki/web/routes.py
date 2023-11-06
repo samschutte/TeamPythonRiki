@@ -18,6 +18,7 @@ from wiki.web.forms import EditorForm
 from wiki.web.forms import LoginForm
 from wiki.web.forms import SearchForm
 from wiki.web.forms import URLForm
+from wiki.web.forms import create_TagsForm  #new import for search by tags
 from wiki.web import current_wiki
 from wiki.web import current_users
 from wiki.web.user import protect
@@ -169,6 +170,19 @@ def user_admin(user_id):
 def user_delete(user_id):
     pass
 
+#A - new route for search_by_tags
+@bp.route('/search_by_tags/', methods=['GET', 'POST'])
+@protect
+def search_by_tags():
+    tags = current_wiki.get_tags()
+    tags_and_count = [[x,len(tags[x])] for x in tags]
+    print(tags_and_count)
+    form = create_TagsForm(tags_and_count)     #A - Needs to pull from wiki pages list of tags
+    if form.validate_on_submit():
+        results = current_wiki.find_by_tags(form.get_selected_tags())
+        return render_template('search_by_tags.html', form=form,
+                               results=results, search=form.get_selected_tags())
+    return render_template('search_by_tags.html', form=form, search=None)
 
 """
     Error Handlers

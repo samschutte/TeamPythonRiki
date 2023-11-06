@@ -55,3 +55,20 @@ class LoginForm(FlaskForm):
             return
         if not user.check_password(field.data):
             raise ValidationError('Username and password do not match.')
+
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+#A - new form for search_by_tags. Not super clean.
+#forms of varried length can be generated with setattr()
+def create_TagsForm(tag_list):
+    
+    class TagsForm(FlaskForm):
+        def get_selected_tags(self):
+            selected_tags = [field.name for field in self if isinstance(field, BooleanField) and field.data]
+            return selected_tags
+    
+    for tag in tag_list:
+        setattr(TagsForm, tag[0], BooleanField(f"{tag[0]} ({tag[1]})"))
+
+    return TagsForm()

@@ -375,3 +375,17 @@ class Wiki(object):
                     matched.append(page)
                     break
         return matched
+    
+    def find_by_tags(self, tags):
+        pages = self.index()
+        matched = []
+        for page in pages:
+            count = 0
+            for search_tag in tags:
+                if search_tag in page.tags:
+                    count+=1
+                    
+            if count==len(tags):
+                matched.append(page)
+                
+        return matched
