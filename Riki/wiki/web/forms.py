@@ -7,8 +7,10 @@ from wtforms import BooleanField
 from wtforms import StringField
 from wtforms import TextAreaField
 from wtforms import PasswordField
+from wtforms import MultipleFileField
 from wtforms.validators import InputRequired
 from wtforms.validators import ValidationError
+from wtforms.validators import regexp
 
 from wiki.core import clean_url
 from wiki.web import current_wiki
@@ -38,6 +40,7 @@ class EditorForm(FlaskForm):
     title = StringField('', [InputRequired()])
     body = TextAreaField('', [InputRequired()])
     tags = StringField('')
+    files = MultipleFileField(u'Upload Files', [])
 
 
 class LoginForm(FlaskForm):
