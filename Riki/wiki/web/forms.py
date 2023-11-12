@@ -56,7 +56,19 @@ class LoginForm(FlaskForm):
         if not user.check_password(field.data):
             raise ValidationError('Username and password do not match.')
 
+class SignupForm(FlaskForm):
+    name = StringField('Username', [InputRequired()])
+    password = PasswordField('Password', [InputRequired()])
+    confirm_password = PasswordField('Confirm Password', [InputRequired()])
 
+    def validate_name(form, field):
+        user = current_users.get_user(field.data)
+        if user:
+            raise ValidationError('This username already exists')
+    
+    def validate_confirm_password(form, field):
+        if form.password.data != form.confirm_password.data:
+            raise ValidationError('Password must match')
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 #A - new form for search_by_tags. Not super clean.
