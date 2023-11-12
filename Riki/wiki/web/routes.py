@@ -2,6 +2,8 @@
     Routes
     ~~~~~~
 """
+import os
+
 from flask import Blueprint
 from flask import flash
 from flask import redirect
@@ -68,6 +70,12 @@ def edit(url):
     if form.validate_on_submit():
         if not page:
             page = current_wiki.get_bare(url)
+        files_filenames = []
+        for file in form.files.data: pass
+            #FIXME: file_filename = file.filename
+            #FIXME: data.save(os.path.join(app.config['files/images/'], file_filename))
+            #FIXME: files_filenames.append(file_filename)
+        print(files_filenames)
         form.populate_obj(page)
         page.save()
         flash('"%s" was saved.' % page.title, 'success')
