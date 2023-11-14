@@ -52,7 +52,3 @@ def test_user_login_route(app):
         assert b'Testing_page_1' not in response.data
         assert b'Testing_page_2' not in response.data
         assert b'Testing_page_3' in response.data
-        
-
-
-
