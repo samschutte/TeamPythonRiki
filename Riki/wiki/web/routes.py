@@ -68,15 +68,15 @@ def create():
 def edit(url):
     page = current_wiki.get(url)
     form = EditorForm(obj=page)
+    path = os.getcwd().replace("\\", "/") + "/wiki/web/files/images/"
     if form.validate_on_submit():
         if not page:
             page = current_wiki.get_bare(url)
-        files_filenames = []
-        for file in form.files.data: pass
-            #FIXME: file_filename = file.filename
-            #FIXME: data.save(os.path.join(app.config['files/images/'], file_filename))
-            #FIXME: files_filenames.append(file_filename)
-        print(files_filenames)
+        files = request.files.getlist("files")
+        print(files)
+        for file in files:
+            with open(path + file, 'w') as f:
+                f.write(file.read());
         form.populate_obj(page)
         page.save()
         flash('"%s" was saved.' % page.title, 'success')
