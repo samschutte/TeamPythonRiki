@@ -161,7 +161,7 @@ def user_logout():
     flash('Logout successful.', 'success')
     return redirect(url_for('wiki.index'))
 
-@bp.route('/user/signup', methods=['GET', 'POST'])
+@bp.route('/user/signup/', methods=['GET', 'POST'])
 @logout_required
 def user_signup():
     form = SignupForm()
@@ -169,7 +169,7 @@ def user_signup():
         user = current_users.add_user(form.name.data, form.password.data)
         login_user(user)
         user.set('authenticated', True)
-        flash(f'Sign Up Sucessful.', 'success')
+        flash(f'Sign Up Successful.', 'success')
         return redirect(url_for('wiki.home'))
     return render_template('signup.html', form=form)
 
