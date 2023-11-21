@@ -25,6 +25,7 @@ from wiki.web.forms import create_TagsForm  #new import for search by tags
 from wiki.web import current_wiki
 from wiki.web import current_users
 from wiki.web.user import protect
+from wiki.web.user import logout_required
 
 
 bp = Blueprint('wiki', __name__)
@@ -140,6 +141,7 @@ def search():
 
 
 @bp.route('/user/login/', methods=['GET', 'POST'])
+@logout_required
 def user_login():
     form = LoginForm()
     if form.validate_on_submit():
@@ -160,6 +162,7 @@ def user_logout():
     return redirect(url_for('wiki.index'))
 
 @bp.route('/user/signup', methods=['GET', 'POST'])
+@logout_required
 def user_signup():
     form = SignupForm()
     if form.validate_on_submit():

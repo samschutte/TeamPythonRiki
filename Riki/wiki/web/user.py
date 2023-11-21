@@ -10,6 +10,9 @@ from functools import wraps
 
 from flask import current_app
 from flask_login import current_user
+from flask import redirect
+from flask import url_for
+from flask import flash
 
 
 
@@ -144,5 +147,14 @@ def protect(f):
     def wrapper(*args, **kwargs):
         if current_app.config.get('PRIVATE') and not current_user.is_authenticated:
             return current_app.login_manager.unauthorized()
+        return f(*args, **kwargs)
+    return wrapper
+
+def logout_required(f):
+    @wraps(f)
+    def wrapper(*args, **kwargs):
+        if current_app.config.get('PRIVATE') and current_user.is_authenticated:
+            flash(f'You are already logged in.', 'success')
+            return redirect(url_for('wiki.home'))  # Redirect to a different route if user is logged in
         return f(*args, **kwargs)
     return wrapper
