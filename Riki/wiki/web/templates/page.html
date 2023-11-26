@@ -5,6 +5,9 @@
 {% endblock title %}
 
 {% block content %}
+	{% for image in page.images.split(',') %}
+        <img src="{{ image }}">
+    {% endfor %}
   <div id="confirmDelete" class="modal hide fade" aria-hidden="true">
     <div class="modal-header">
       <h3>Are you sure?</h3>
@@ -17,7 +20,7 @@
       <a href="{{ url_for('wiki.delete', url=page.url) }}" class="btn btn-danger">Yes, delete.</a>
     </div>
   </div>
-	{{ page }}
+	{{ page }}	
 {% endblock content %}
 
 {% block sidebar %}
