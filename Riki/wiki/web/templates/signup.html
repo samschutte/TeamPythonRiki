@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}Sign Up{% endblock title %}
+
+{% block content %}
+<form class="form-horizontal" method="POST">
+    {{ form.hidden_tag() }}
+    <div class="control-group">
+        <label class="control-label">Username</label>
+        <div class="controls">
+            {{ form.name(placeholder='Username') }}
+            {% for error in form.name.errors %}
+            <div class="text-warning">{{ error }}</div>
+            {% endfor %}
+        </div>
+
+    </div>
+    <div class="control-group">
+        <label class="control-label">Password</label>
+        <div class="controls">
+            {{ form.password(placeholder='Password') }}
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label">Confirm Password</label>
+        <div class="controls">
+            {{ form.confirm_password(placeholder='Confirm Password') }}
+            {% for error in form.confirm_password.errors %}
+            <div class="text-warning">{{ error }}</div>
+            {% endfor %}
+        </div>
+
+    </div>
+    <div class="control-group">
+        <div class="controls">
+            <input type="submit" class="btn btn-primary" value="Sign Up">
+        </div>
+    </div>
+</form>
+{% endblock content %}

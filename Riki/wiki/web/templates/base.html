@@ -27,8 +27,9 @@
 							</ul>
 
 							<ul class="nav pull-right">
-								{% if current_user.is_anonymous %}
+								{% if not current_user.is_authenticated %}
 									<li><a href="{{ url_for('wiki.user_login') }}">Login</a></li>
+									<li><a href="{{ url_for('wiki.user_signup') }}">Sign Up</a></li>
 								{% else %}
 									<li><a href="{{ url_for('wiki.user_logout') }}">Logout</a></li>
 								{% endif %}

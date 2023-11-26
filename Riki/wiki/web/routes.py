@@ -20,6 +20,7 @@ from pprint import pprint
 from wiki.core import Processor
 from wiki.web.forms import EditorForm
 from wiki.web.forms import LoginForm
+from wiki.web.forms import SignupForm
 from wiki.web.forms import SearchForm
 from wiki.web.forms import URLForm
 from wiki.web.forms import create_TagsForm  #new import for search by tags
@@ -141,6 +142,7 @@ def search():
 
 
 @bp.route('/user/login/', methods=['GET', 'POST'])
+@logout_required
 def user_login():
     form = LoginForm()
     if form.validate_on_submit():
@@ -160,6 +162,17 @@ def user_logout():
     flash('Logout successful.', 'success')
     return redirect(url_for('wiki.index'))
 
+@bp.route('/user/signup/', methods=['GET', 'POST'])
+@logout_required
+def user_signup():
+    form = SignupForm()
+    if form.validate_on_submit():
+        user = current_users.add_user(form.name.data, form.password.data)
+        login_user(user)
+        user.set('authenticated', True)
+        flash(f'Sign Up Successful.', 'success')
+        return redirect(url_for('wiki.home'))
+    return render_template('signup.html', form=form)
 
 @bp.route('/user/')
 def user_index():
