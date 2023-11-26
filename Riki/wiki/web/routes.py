@@ -2,8 +2,7 @@
     Routes
     ~~~~~~
 """
-import os
-
+from flask import app
 from flask import Blueprint
 from flask import flash
 from flask import redirect
@@ -15,6 +14,9 @@ from flask_login import login_required
 from flask_login import login_user
 from flask_login import logout_user
 
+from werkzeug.utils import secure_filename
+from pprint import pprint
+
 from wiki.core import Processor
 from wiki.web.forms import EditorForm
 from wiki.web.forms import LoginForm
@@ -24,6 +26,7 @@ from wiki.web.forms import create_TagsForm  #new import for search by tags
 from wiki.web import current_wiki
 from wiki.web import current_users
 from wiki.web.user import protect
+from wiki.web.file_handler import FileHandler
 
 
 bp = Blueprint('wiki', __name__)
@@ -67,17 +70,15 @@ def create():
 def edit(url):
     page = current_wiki.get(url)
     form = EditorForm(obj=page)
-    path = os.getcwd().replace("\\", "/") + "/wiki/web/files/images/"
     if form.validate_on_submit():
         if not page:
             page = current_wiki.get_bare(url)
-        files = request.files.getlist("files")
-        print(files)
-        for file in files:
-            with open(path + file, 'w') as f:
-                f.write(file.read());
-        form.populate_obj(page)
-        page.save()
+        if 'file' in request.files:
+            file = request.files['file']
+            filename = secure_filename(file.filename)
+            if filename != "":
+                fileHandler = FileHandler(file, page)
+                fileHandler.sortFile()
         flash('"%s" was saved.' % page.title, 'success')
         return redirect(url_for('wiki.display', url=url))
     return render_template('editor.html', form=form, page=page)

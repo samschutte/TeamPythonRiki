@@ -7,7 +7,7 @@ from wtforms import BooleanField
 from wtforms import StringField
 from wtforms import TextAreaField
 from wtforms import PasswordField
-from wtforms import MultipleFileField
+from wtforms import FileField
 from wtforms.validators import InputRequired
 from wtforms.validators import ValidationError
 from wtforms.validators import regexp
@@ -40,7 +40,7 @@ class EditorForm(FlaskForm):
     title = StringField('', [InputRequired()])
     body = TextAreaField('', [InputRequired()])
     tags = StringField('')
-    files = MultipleFileField(u'Upload Files', [])
+    file = FileField(u'Upload File')
 
 
 class LoginForm(FlaskForm):
