@@ -27,6 +27,7 @@ from wiki.web import current_wiki
 from wiki.web import current_users
 from wiki.web.user import protect
 from wiki.web.file_handler import FileHandler
+from wiki.web.user import logout_required
 
 
 bp = Blueprint('wiki', __name__)
