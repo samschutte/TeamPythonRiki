@@ -5,9 +5,19 @@
 {% endblock title %}
 
 {% block content %}
-	{% for image in page.images.split(',') %}
-        <img src="{{ image }}">
-    {% endfor %}
+	{% if page.images is defined %}
+		{% for image in page.images.split(',') %}
+			<img width="400" src="{{ image }}">
+		{% endfor %}
+	{% endif %}
+	{% if page.videos is defined %}
+		{% for video in page.videos.split(',') %}
+			<video width="320" height="240" controls>
+			  <source src="{{ video }}" type="video/mp4">
+			Your browser does not support the video tag.
+			</video>
+		{% endfor %}
+	{% endif %}
   <div id="confirmDelete" class="modal hide fade" aria-hidden="true">
     <div class="modal-header">
       <h3>Are you sure?</h3>
@@ -20,7 +30,17 @@
       <a href="{{ url_for('wiki.delete', url=page.url) }}" class="btn btn-danger">Yes, delete.</a>
     </div>
   </div>
-	{{ page }}	
+	<div style="padding-top: 50px; padding-bottom: 10px;">
+	{{ page }}
+	</div>
+	<h4 style="padding-top: 10px; padding-bottom: 10px">Documents:</h4>
+		{% if page.documents is defined %}
+			{% for document in page.documents.split(',') %}
+				{% set sections = document.split('/')  %}
+					<a href="{{ document }}" target="_blank">{{ sections[5] }}</a>
+			{% endfor %}
+		{% endif %}
+	<h4 style="padding-top: 10px; padding-bottom: 10px">References:</h4>
 {% endblock content %}
 
 {% block sidebar %}

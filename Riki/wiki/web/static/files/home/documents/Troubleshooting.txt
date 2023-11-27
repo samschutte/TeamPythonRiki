@@ -1,0 +1,6 @@
+Look at the stack trace (duh).
+docker ps
+docker-compose coreapp /bin/bash
+ls to list files in directory
+cd ci4app/writable/logs
+docker-compose logs (coreapp, coredb, todoapp, etc.)
