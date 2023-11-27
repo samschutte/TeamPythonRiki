@@ -146,3 +146,4 @@ class DocumentHandler(FileHandler):
                 index += 1
         with open(self.markdown, "r+") as markdown:
             markdown.writelines(data)
+            
