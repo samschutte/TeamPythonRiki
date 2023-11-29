@@ -17,6 +17,11 @@ Wiki Editor
 			{{ input(form.body, placeholder="Markdown", class="span7", rows="20") }}
 			{{ input(form.tags, placeholder="Tags (comma separated)", class="span7", autocomplete="off") }}
             {{ input(form.file) }}
+			{{ input(form.referenceTitle, placeholder="Reference Title", style="inline-block") }}
+			{{ input(form.referenceAuthor, placeholder="Reference Author", style="inline-block") }}
+			{{ input(form.referenceDate, placeholder="Reference Date") }}
+			{{ input(form.referenceLink, placeholder="Reference Link") }}
+			{{ input(form.referenceISBN, placeholder="Reference ISBN") }}
 			<div class="form-actions">
         <div class="pull-left">
           <a class="btn" href="#preview" id="previewbtn">Preview</a>

@@ -41,6 +41,11 @@ class EditorForm(FlaskForm):
     body = TextAreaField('', [InputRequired()])
     tags = StringField('')
     file = FileField(u'Upload File')
+    referenceTitle = StringField(u'Add a Reference:')
+    referenceAuthor = StringField('')
+    referenceDate = StringField('')
+    referenceLink = StringField('')
+    referenceISBN = StringField('')
 
 
 class LoginForm(FlaskForm):
