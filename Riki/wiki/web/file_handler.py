@@ -57,9 +57,8 @@ class ImageHandler(FileHandler):
         index = 0
         if self.found == False:
             for entry in data:
-                print(entry)
                 if entry in ['\n', '\r\n']:
-                    data[index] = "images: " + self.url + self.fileName + "\n"
+                    data[index] = "images: " + self.url + self.fileName + "\n\n"
                     break
                 index += 1
         with open(self.markdown, "r+") as markdown:
@@ -98,7 +97,6 @@ class VideoHandler(FileHandler):
         index = 0
         if self.found == False:
             for entry in data:
-                print(entry)
                 if entry in ['\n', '\r\n']:
                     data[index] = "videos: " + self.url + self.fileName + "\n\n"
                     break
@@ -132,14 +130,13 @@ class DocumentHandler(FileHandler):
         index = 0
         for entry in data:
             if entry.startswith("documents:"):
-                data[index] = data[index].strip() + ", " + self.url + self.fileName + "\n\n"
+                data[index] = data[index].strip() + ", " + self.url + self.fileName + "\n"
                 self.found = True
                 break
             index += 1
         index = 0
         if self.found == False:
             for entry in data:
-                print(entry)
                 if entry in ['\n', '\r\n']:
                     data[index] = "documents: " + self.url + self.fileName + "\n\n"
                     break

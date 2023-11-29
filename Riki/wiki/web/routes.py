@@ -28,6 +28,7 @@ from wiki.web import current_wiki
 from wiki.web import current_users
 from wiki.web.user import protect
 from wiki.web.file_handler import FileHandler
+from wiki.web.reference_handler import ReferenceHandler
 from wiki.web.user import logout_required
 
 
@@ -75,12 +76,17 @@ def edit(url):
     if form.validate_on_submit():
         if not page:
             page = current_wiki.get_bare(url)
+        form.populate_obj(page)
+        page.save()
         if 'file' in request.files:
             file = request.files['file']
             filename = secure_filename(file.filename)
             if filename != "":
                 fileHandler = FileHandler(file, page)
                 fileHandler.sortFile()
+        if request.form["referenceTitle"] != 0:
+            reference = ReferenceHandler(request.form["referenceTitle"], request.form["referenceAuthor"], request.form["referenceDate"], request.form["referenceLink"], request.form["referenceISBN"], page)
+            reference.addReference()
         flash('"%s" was saved.' % page.title, 'success')
         return redirect(url_for('wiki.display', url=url))
     return render_template('editor.html', form=form, page=page)

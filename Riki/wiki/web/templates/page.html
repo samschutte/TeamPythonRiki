@@ -41,6 +41,27 @@
 			{% endfor %}
 		{% endif %}
 	<h4 style="padding-top: 10px; padding-bottom: 10px">References:</h4>
+		{% if page.references is defined %}
+			{% for reference in page.references.split(';') %}
+				{% set sections = reference.split('|')  %}
+					<div class="block">
+					{% if sections[3]|length %}
+					<a href="{{ sections[3] }}" target="_blank">{{ sections[0] }}</a>. 
+					{% else %}
+					{{ sections[0] }}. 
+					{% endif %}
+					{% if sections[1]|length %}
+					{{ sections[1] }}. 
+					{% endif %}
+					{% if sections[2]|length %}
+					{{ sections[2] }}. 
+					{% endif %}
+					{% if sections[4]|length %}
+					ISBN:{{ sections[4] }}. 
+					{% endif %}
+					</div>
+			{% endfor %}
+		{% endif %}
 {% endblock content %}
 
 {% block sidebar %}
