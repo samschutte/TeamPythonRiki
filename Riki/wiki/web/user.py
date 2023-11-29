@@ -146,7 +146,8 @@ def protect(f):
     @wraps(f)
     def wrapper(*args, **kwargs):
         if current_app.config.get('PRIVATE') and not current_user.is_authenticated:
-            return current_app.login_manager.unauthorized()
+            flash(f'Log in or Sign up to access this page.', 'warning')
+            return redirect(url_for('wiki.user_login')) 
         return f(*args, **kwargs)
     return wrapper
 
@@ -155,6 +156,6 @@ def logout_required(f):
     def wrapper(*args, **kwargs):
         if current_app.config.get('PRIVATE') and current_user.is_authenticated:
             flash(f'You are already logged in.', 'success')
-            return redirect(url_for('wiki.home'))  # Redirect to a different route if user is logged in
+            return redirect(url_for('wiki.home'))
         return f(*args, **kwargs)
     return wrapper
