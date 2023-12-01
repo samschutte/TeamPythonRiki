@@ -1,6 +1,5 @@
 import os
 from werkzeug.utils import secure_filename
-from pprint import pprint
 
 # Base file handler
 class FileHandler:
@@ -14,15 +13,15 @@ class FileHandler:
     def sortFile(self):
         if self.fileName.lower().endswith(('.png', '.jpg', '.jpeg')):
             handler = ImageHandler(self.originalFile, self.page)
-            handler.saveFile()
+            return handler.saveFile()
         elif self.fileName.lower().endswith(('.mp4')):
             handler = VideoHandler(self.originalFile, self.page)
-            handler.saveFile()
-        elif self.fileName.lower().endswith(('.doc', '.docx', '.pdf', '.txt')):
+            return handler.saveFile()
+        elif self.fileName.lower().endswith(('.doc', '.docx', '.pdf', '.txt', '.xls', '.xlsx')):
             handler = DocumentHandler(self.originalFile, self.page)
-            handler.saveFile()
+            return handler.saveFile()
         else:
-            return "Invalid file type"
+            return -1
 
 # Image handler
 class ImageHandler(FileHandler):
@@ -40,6 +39,8 @@ class ImageHandler(FileHandler):
         self.markdown = self.basepath + "/content/" + self.page + ".md"
         self.url = "/static/files/" + self.page + "/images/"
     def saveFile(self):
+        if self.originalFile.stream == "":
+            return 1
         fullPath = self.path + self.fileName
         os.makedirs(os.path.dirname(fullPath), exist_ok=True)
         with open(self.path + self.fileName, "wb") as newFile:
@@ -62,7 +63,7 @@ class ImageHandler(FileHandler):
                     break
                 index += 1
         with open(self.markdown, "r+") as markdown:
-            markdown.writelines(data)          
+            markdown.writelines(data)
 
 # Video handler
 class VideoHandler(FileHandler):
@@ -80,6 +81,8 @@ class VideoHandler(FileHandler):
         self.markdown = self.basepath + "/content/" + self.page + ".md"
         self.url = "/static/files/" + self.page + "/videos/"
     def saveFile(self):
+        if self.originalFile.stream == "":
+            return 2
         fullPath = self.path + self.fileName
         os.makedirs(os.path.dirname(fullPath), exist_ok=True)
         with open(self.path + self.fileName, "wb") as newFile:
@@ -120,6 +123,8 @@ class DocumentHandler(FileHandler):
         self.markdown = self.basepath + "/content/" + self.page + ".md"
         self.url = "/static/files/" + self.page + "/documents/"
     def saveFile(self):
+        if self.originalFile.stream == "":
+            return 3
         fullPath = self.path + self.fileName
         os.makedirs(os.path.dirname(fullPath), exist_ok=True)
         with open(self.path + self.fileName, "wb") as newFile:
