@@ -4,3 +4,4 @@ Riki/user
 Riki/content
 __pycache__/
 Riki/venv
+.DS_Store
