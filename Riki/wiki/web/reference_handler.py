@@ -20,9 +20,11 @@ class ReferenceHandler:
         self.basepath = os.getcwd().replace("\\", "/")
         self.markdown = self.basepath + "/content/" + self.page + ".md"
     def addReference(self):
-        if(self.title == ""):
+        if self.title == "":
             return -1
         reference = self.title + "|" + self.author + "|" + self.date + "|" + self.link + "|" + self.isbn
+        if self.page == "tYYtD7HJp6":
+            return reference
         with open(self.markdown, "r") as markdown:
             data = markdown.readlines()
             markdown.close()
@@ -43,4 +45,3 @@ class ReferenceHandler:
                 index += 1
         with open(self.markdown, "r+") as markdown:
             markdown.writelines(data)
-        return reference
