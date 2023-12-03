@@ -3,7 +3,6 @@ import os
 from wiki import create_app
 from wiki.web import current_users
 
-# Initialize your app for testing
 @pytest.fixture
 def app():
     directory = os.getcwd()
