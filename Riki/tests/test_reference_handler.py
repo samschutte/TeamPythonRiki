@@ -2,7 +2,7 @@ import pytest
 from wiki.web.reference_handler import ReferenceHandler
 
 class FakePage:
-    url = "test"
+    url = "tYYtD7HJp6"
     def __init__(self):
         pass
 
