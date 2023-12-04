@@ -38,4 +38,4 @@ def test_search_log_valid_tag(app):
         data = {'interesting': True}
         response = client.get('/search_by_tags/', data=data, follow_redirects = True)
         assert b'Home' in response.data
-        
+
